@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="WuaYTVR1feOlg9B_jylNUo7w3C-qqOkra4tKs78W0-I" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mello Corp — Suporte & TI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #000000;
+      --dark: #080810;
+      --dark2: #0d0d1a;
+      --dark3: #13132a;
+      --white: #ffffff;
+      --gray: #8888aa;
+      --gray2: #2a2a50;
+      --accent: #7b4fd4;
+      --blue: #3a8ef6;
+      --purple: #7b4fd4;
+      --gradient: linear-gradient(135deg, #3a8ef6 0%, #7b4fd4 100%);
+      --gradient-text: linear-gradient(90deg, #3a8ef6, #7b4fd4);
+      --glow-blue: rgba(58,142,246,0.3);
+      --glow-purple: rgba(123,79,212,0.3);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.12em; color:var(--white); text-decoration:none; }
+    .nav-logo span { background:var(--gradient-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a { font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gray); text-decoration:none; transition:color 0.2s; }
+    .nav-links a:hover { color:var(--white); }
+    .nav-cta { font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--white); background:transparent; border:1px solid var(--blue); padding:0.5rem 1.4rem; text-decoration:none; transition:all 0.2s; }
+    .nav-cta:hover { border-color:var(--purple); background:rgba(58,142,246,0.08); box-shadow:0 0 14px var(--glow-blue); }
+
+    /* HERO */
+    #hero { min-height:100vh; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding:0 4rem; }
+    .hero-bg { position:absolute; inset:0; background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(58,142,246,0.07) 0%, transparent 70%), radial-gradient(ellipse 40% 30% at 80% 20%, rgba(123,79,212,0.12) 0%, transparent 60%), radial-gradient(ellipse 30% 20% at 10% 80%, rgba(58,142,246,0.08) 0%, transparent 50%); }
+    .hero-content { position:relative; z-index:2; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:6rem; max-width:1200px; width:100%; animation:fadeUp 1s ease forwards; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .hero-badge { display:inline-block; font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--blue); border:1px solid rgba(58,142,246,0.35); padding:0.3rem 0.9rem; margin-bottom:2rem; }
+    .hero-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(4rem,8vw,7.5rem); line-height:0.92; letter-spacing:0.04em; color:var(--white); margin-bottom:1.5rem; }
+    .hero-title .line2 { color:var(--gray); }
+    .hero-desc { font-size:1rem; line-height:1.8; color:var(--gray); max-width:420px; margin-bottom:2.5rem; font-weight:300; }
+    .hero-actions { display:flex; gap:1rem; align-items:center; }
+    .btn-primary { font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--white); background:var(--gradient); padding:0.8rem 2rem; text-decoration:none; transition:opacity 0.2s,box-shadow 0.2s; box-shadow:0 0 20px var(--glow-blue); }
+    .btn-primary:hover { opacity:0.85; box-shadow:0 0 30px var(--glow-purple); }
+    .btn-secondary { font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gray); text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+    .btn-secondary:hover { color:var(--white); }
+    .hero-logo-wrap { display:flex; align-items:center; justify-content:center; }
+    .hero-logo-wrap img { width:100%; max-width:420px; filter:drop-shadow(0 0 40px rgba(58,142,246,0.2)) drop-shadow(0 0 80px rgba(123,79,212,0.15)); animation:float 6s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+
+    /* STATS */
+    .stats-bar { background:var(--dark2); border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06); padding:2rem 4rem; display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; }
+    .stat { text-align:center; }
+    .stat-number { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; letter-spacing:0.04em; background:var(--gradient-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; }
+    .stat-label { font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gray); margin-top:0.3rem; }
+
+    /* SECTIONS */
+    section { padding:7rem 4rem; max-width:1200px; margin:0 auto; }
+    .section-label { font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gray); margin-bottom:1rem; display:flex; align-items:center; gap:0.8rem; }
+    .section-label::before { content:''; display:inline-block; width:2rem; height:1px; background:var(--gradient); }
+    .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,5vw,4.5rem); letter-spacing:0.04em; color:var(--white); line-height:0.95; margin-bottom:3rem; }
+
+    /* SERVICES */
+    #servicos { max-width:1200px; }
+    .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--gray2); }
+    .service-card { background:var(--dark); padding:2.5rem; transition:background 0.3s; position:relative; overflow:hidden; }
+    .service-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:2px; background:var(--gradient); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+    .service-card:hover { background:var(--dark3); }
+    .service-card:hover::before { transform:scaleX(1); }
+    .service-icon { width:48px; height:48px; margin-bottom:1.5rem; display:block; }
+    .service-title { font-family:'Barlow Condensed',sans-serif; font-size:1.2rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--white); margin-bottom:0.8rem; }
+    .service-desc { font-size:0.9rem; line-height:1.7; color:var(--gray); font-weight:300; }
+
+    /* GALLERY */
+    #portfolio { max-width:1200px; padding-top:5rem; padding-bottom:5rem; }
+    .gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    .gallery-item { position:relative; overflow:hidden; border:1px solid var(--gray2); background:var(--dark2); aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color 0.3s,box-shadow 0.3s; }
+    .gallery-item:hover { border-color:var(--blue); box-shadow:0 0 24px var(--glow-blue); }
+    .gallery-item svg { width:100%; height:100%; }
+    .gallery-caption { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top, rgba(8,8,16,0.95) 0%, transparent 100%); padding:1.5rem 1rem 0.8rem; font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gray); transform:translateY(100%); transition:transform 0.3s; }
+    .gallery-item:hover .gallery-caption { transform:translateY(0); }
+
+    /* TESTIMONIALS */
+    #depoimentos { max-width:1200px; padding-bottom:5rem; }
+    .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    .testimonial-card { background:var(--dark2); border:1px solid var(--gray2); padding:2rem; position:relative; transition:border-color 0.3s,box-shadow 0.3s; }
+    .testimonial-card:hover { border-color:rgba(58,142,246,0.35); box-shadow:0 0 24px rgba(58,142,246,0.08); }
+    .testimonial-card::before { content:'\201C'; position:absolute; top:1rem; right:1.5rem; font-family:'Bebas Neue',sans-serif; font-size:5rem; line-height:1; background:var(--gradient-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; opacity:0.25; }
+    .testimonial-stars { display:flex; gap:3px; margin-bottom:1rem; }
+    .testimonial-stars svg { width:14px; height:14px; }
+    .testimonial-text { font-size:0.92rem; line-height:1.75; color:var(--gray); font-weight:300; margin-bottom:1.5rem; }
+    .testimonial-author { display:flex; align-items:center; gap:0.8rem; border-top:1px solid var(--gray2); padding-top:1rem; }
+    .testimonial-avatar { width:40px; height:40px; border-radius:50%; background:var(--gradient); display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:1rem; color:var(--white); flex-shrink:0; }
+    .testimonial-name { font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--white); }
+    .testimonial-role { font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray); margin-top:0.1rem; }
+    .testimonial-badge { margin-left:auto; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.6rem; border:1px solid var(--gray2); color:var(--gray); white-space:nowrap; }
+    .testimonial-badge.empresa { border-color:rgba(58,142,246,0.3); color:var(--blue); }
+
+    /* ABOUT */
+    #sobre { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; max-width:1200px; }
+    .about-box { background:var(--dark2); border:1px solid rgba(58,142,246,0.2); padding:3rem; box-shadow:0 0 40px rgba(123,79,212,0.08); }
+    .about-quote { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.05em; color:var(--white); line-height:1.2; margin-bottom:1.5rem; }
+    .about-text { font-size:0.95rem; line-height:1.8; color:var(--gray); font-weight:300; }
+    .about-list { list-style:none; margin-top:2rem; display:flex; flex-direction:column; gap:0.8rem; }
+    .about-list li { font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; letter-spacing:0.1em; color:var(--blue); display:flex; align-items:center; gap:0.8rem; }
+    .about-list li::before { content:'—'; color:var(--purple); }
+
+    /* CONTACT */
+    #contato { max-width:1200px; }
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+    .contact-info { display:flex; flex-direction:column; gap:2rem; }
+    .contact-item { display:flex; flex-direction:column; gap:0.3rem; }
+    .contact-item-label { font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gray); }
+    .contact-item-value { font-size:1rem; color:var(--white); }
+    .contact-form { display:flex; flex-direction:column; gap:1rem; }
+    .form-group { display:flex; flex-direction:column; gap:0.4rem; }
+    .form-group label { font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gray); }
+    .form-group input,.form-group textarea { background:var(--dark2); border:1px solid var(--gray2); color:var(--white); font-family:'Barlow',sans-serif; font-size:0.9rem; padding:0.8rem 1rem; outline:none; transition:border-color 0.2s,box-shadow 0.2s; resize:vertical; }
+    .form-group input:focus,.form-group textarea:focus { border-color:var(--blue); box-shadow:0 0 0 2px rgba(58,142,246,0.12); }
+    .form-group textarea { min-height:120px; }
+    .form-submit { font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--white); background:var(--gradient); border:none; padding:0.9rem 2rem; cursor:pointer; align-self:flex-start; transition:opacity 0.2s,box-shadow 0.2s; box-shadow:0 0 16px var(--glow-blue); }
+    .form-submit:hover { opacity:0.85; box-shadow:0 0 24px var(--glow-purple); }
+
+    /* FOOTER */
+    footer { border-top:1px solid rgba(255,255,255,0.06); padding:2rem 4rem; display:flex; justify-content:space-between; align-items:center; }
+    .footer-logo { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.12em; color:var(--white); }
+    .footer-logo span { background:var(--gradient-text); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .footer-copy { font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; letter-spacing:0.15em; color:var(--gray); text-transform:uppercase; }
+
+    /* DIVIDER */
+    .divider { height:1px; background:rgba(255,255,255,0.06); margin:0 4rem; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease,transform 0.7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* MOBILE */
+    @media (max-width:900px) {
+      nav { padding:1rem 1.5rem; }
+      .nav-links { display:none; }
+      #hero { padding:0 1.5rem; padding-top:6rem; }
+      .hero-content { grid-template-columns:1fr; gap:2rem; text-align:center; }
+      .hero-logo-wrap { order:-1; }
+      .hero-logo-wrap img { max-width:240px; }
+      .hero-desc { max-width:100%; }
+      .hero-actions { justify-content:center; }
+      .stats-bar { grid-template-columns:repeat(2,1fr); padding:2rem 1.5rem; }
+      section { padding:4rem 1.5rem; }
+      .services-grid { grid-template-columns:1fr; }
+      .gallery-grid { grid-template-columns:1fr 1fr; }
+      #sobre { grid-template-columns:1fr; gap:2rem; }
+      .testimonials-grid { grid-template-columns:1fr; }
+      .contact-grid { grid-template-columns:1fr; gap:2rem; }
+      footer { padding:1.5rem; flex-direction:column; gap:1rem; text-align:center; }
+      .divider { margin:0 1.5rem; }
+    }
+    @media (max-width:600px) { .gallery-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">MELLO <span>CORP</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#depoimentos">Depoimentos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="#contato" class="nav-cta">Fale Conosco</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="hero-badge">Suporte & TI — Mogi das Cruzes, SP</span>
+      <h1 class="hero-title">SUA TI<br><span class="line2">EM ORDEM.</span></h1>
+      <p class="hero-desc">Manutenção de computadores, suporte técnico e serviços de TI para empresas e pessoas físicas. Atendimento rápido, solução garantida.</p>
+      <div class="hero-actions">
+        <a href="#contato" class="btn-primary">Solicitar Atendimento</a>
+        <a href="#servicos" class="btn-secondary">Ver Serviços →</a>
+      </div>
+    </div>
+    <div class="hero-logo-wrap">
+      <img src="logo.png" alt="Mello Corp">
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar reveal">
+  <div class="stat"><div class="stat-number">100%</div><div class="stat-label">Satisfação</div></div>
+  <div class="stat"><div class="stat-number">24H</div><div class="stat-label">Tempo de Resposta</div></div>
+  <div class="stat"><div class="stat-number">+5</div><div class="stat-label">Anos de Experiência</div></div>
+  <div class="stat"><div class="stat-number">SP</div><div class="stat-label">Grande São Paulo</div></div>
+</div>
+
+<!-- SERVICES -->
+<section id="servicos">
+  <div class="section-label">O que fazemos</div>
+  <h2 class="section-title">SERVIÇOS</h2>
+  <div class="services-grid reveal">
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="28" rx="2" stroke="#3a8ef6" stroke-width="2"/><rect x="8" y="12" width="32" height="20" rx="1" fill="rgba(58,142,246,0.08)" stroke="#3a8ef6" stroke-width="1.2"/><line x1="16" y1="36" x2="32" y2="36" stroke="#7b4fd4" stroke-width="2"/><line x1="20" y1="36" x2="20" y2="40" stroke="#7b4fd4" stroke-width="2"/><line x1="28" y1="36" x2="28" y2="40" stroke="#7b4fd4" stroke-width="2"/><line x1="14" y1="40" x2="34" y2="40" stroke="#7b4fd4" stroke-width="2"/><path d="M22 22 L26 18 L30 22" stroke="#3a8ef6" stroke-width="1.5" stroke-linecap="round"/><line x1="26" y1="18" x2="26" y2="28" stroke="#3a8ef6" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="service-title">Manutenção de Computadores</div>
+      <p class="service-desc">Diagnóstico completo, limpeza interna, troca de componentes defeituosos, upgrades de memória RAM e SSD. PC travando ou lento? A gente resolve no mesmo dia.</p>
+    </div>
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="#3a8ef6" stroke-width="2"/><path d="M18 20 C18 16 30 16 30 20 C30 24 24 24 24 28" stroke="#7b4fd4" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="33" r="1.5" fill="#3a8ef6"/><path d="M12 24 C12 17.37 17.37 12 24 12" stroke="rgba(58,142,246,0.3)" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="service-title">Suporte Técnico</div>
+      <p class="service-desc">Atendimento presencial em Mogi das Cruzes e remoto para toda Grande SP. Erros de sistema, instalação de programas, configuração de e-mail e muito mais.</p>
+    </div>
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="12" r="4" stroke="#3a8ef6" stroke-width="2"/><circle cx="10" cy="36" r="4" stroke="#7b4fd4" stroke-width="2"/><circle cx="38" cy="36" r="4" stroke="#7b4fd4" stroke-width="2"/><circle cx="24" cy="36" r="4" stroke="#3a8ef6" stroke-width="2"/><line x1="24" y1="16" x2="10" y2="32" stroke="#3a8ef6" stroke-width="1.5"/><line x1="24" y1="16" x2="38" y2="32" stroke="#3a8ef6" stroke-width="1.5"/><line x1="24" y1="16" x2="24" y2="32" stroke="#7b4fd4" stroke-width="1.5"/></svg>
+      <div class="service-title">Redes & Infraestrutura</div>
+      <p class="service-desc">Instalação de cabeamento estruturado Cat5e/Cat6, configuração de roteadores, switches e access points. Redes corporativas do zero ou expansão da estrutura atual.</p>
+    </div>
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><rect x="8" y="14" width="32" height="22" rx="2" stroke="#3a8ef6" stroke-width="2"/><circle cx="14" cy="25" r="3" stroke="#7b4fd4" stroke-width="1.5"/><line x1="20" y1="21" x2="34" y2="21" stroke="rgba(58,142,246,0.5)" stroke-width="1.2"/><line x1="20" y1="25" x2="34" y2="25" stroke="rgba(58,142,246,0.5)" stroke-width="1.2"/><line x1="20" y1="29" x2="28" y2="29" stroke="rgba(58,142,246,0.5)" stroke-width="1.2"/><path d="M36 8 C40 8 42 12 42 16" stroke="#3a8ef6" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 2"/><path d="M38 6 L36 10 L40 10 Z" fill="#3a8ef6"/></svg>
+      <div class="service-title">Recuperação de Dados</div>
+      <p class="service-desc">HD com defeito físico ou lógico, SSD corrompido, arquivos deletados acidentalmente. Alta taxa de sucesso na recuperação. Sem recuperação, sem cobrança.</p>
+    </div>
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><path d="M24 6 L38 11 L38 24 C38 32 32 38 24 42 C16 38 10 32 10 24 L10 11 Z" stroke="#3a8ef6" stroke-width="2" fill="rgba(58,142,246,0.06)"/><path d="M18 24 L22 28 L30 20" stroke="#7b4fd4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="service-title">Segurança & Antivírus</div>
+      <p class="service-desc">Remoção completa de vírus, ransomware e malware. Instalação e configuração de soluções antivírus corporativas. Proteção de dados e backup automatizado em nuvem.</p>
+    </div>
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><rect x="6" y="16" width="36" height="22" rx="2" stroke="#3a8ef6" stroke-width="2"/><rect x="6" y="10" width="36" height="8" rx="1" stroke="#7b4fd4" stroke-width="1.5" fill="rgba(123,79,212,0.08)"/><line x1="10" y1="14" x2="14" y2="14" stroke="#7b4fd4" stroke-width="1.5" stroke-linecap="round"/><line x1="17" y1="14" x2="21" y2="14" stroke="#7b4fd4" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="24" x2="38" y2="24" stroke="rgba(58,142,246,0.3)" stroke-width="1"/><line x1="10" y1="28" x2="28" y2="28" stroke="rgba(58,142,246,0.3)" stroke-width="1"/><line x1="10" y1="32" x2="22" y2="32" stroke="rgba(58,142,246,0.3)" stroke-width="1"/></svg>
+      <div class="service-title">TI para Empresas</div>
+      <p class="service-desc">Terceirização completa de TI com contrato mensal. Manutenção preventiva, gerenciamento de parque de computadores, servidores e helpdesk dedicado para sua equipe.</p>
+    </div>
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><rect x="8" y="6" width="32" height="36" rx="2" stroke="#3a8ef6" stroke-width="2"/><line x1="14" y1="14" x2="34" y2="14" stroke="rgba(58,142,246,0.4)" stroke-width="1.2"/><line x1="14" y1="19" x2="34" y2="19" stroke="rgba(58,142,246,0.4)" stroke-width="1.2"/><line x1="14" y1="24" x2="26" y2="24" stroke="rgba(58,142,246,0.4)" stroke-width="1.2"/><circle cx="32" cy="32" r="7" fill="var(--dark2)" stroke="#7b4fd4" stroke-width="1.5"/><path d="M29 32 L31 34 L35 30" stroke="#7b4fd4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="service-title">Formatação & Reinstalação</div>
+      <p class="service-desc">Formatação completa com instalação de Windows, drivers e programas essenciais. Computador lento? Novo em folha em poucas horas, com backup dos seus dados garantido.</p>
+    </div>
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><rect x="6" y="8" width="36" height="10" rx="1.5" stroke="#3a8ef6" stroke-width="2" fill="rgba(58,142,246,0.06)"/><rect x="6" y="20" width="36" height="10" rx="1.5" stroke="#3a8ef6" stroke-width="2" fill="rgba(58,142,246,0.06)"/><rect x="6" y="32" width="36" height="10" rx="1.5" stroke="#7b4fd4" stroke-width="2" fill="rgba(123,79,212,0.06)"/><circle cx="12" cy="13" r="1.5" fill="#3a8ef6"/><circle cx="17" cy="13" r="1.5" fill="#3a8ef6"/><line x1="24" y1="11" x2="36" y2="11" stroke="rgba(58,142,246,0.4)" stroke-width="1.2"/><circle cx="12" cy="25" r="1.5" fill="#3a8ef6"/><circle cx="17" cy="25" r="1.5" fill="#3a8ef6"/><line x1="24" y1="23" x2="36" y2="23" stroke="rgba(58,142,246,0.4)" stroke-width="1.2"/><circle cx="12" cy="37" r="1.5" fill="#7b4fd4"/><circle cx="17" cy="37" r="1.5" fill="#7b4fd4"/><line x1="24" y1="35" x2="36" y2="35" stroke="rgba(123,79,212,0.4)" stroke-width="1.2"/></svg>
+      <div class="service-title">Servidores & Cloud</div>
+      <p class="service-desc">Instalação, configuração e manutenção de servidores físicos e virtuais. Migração para nuvem, configuração de NAS, Active Directory e ambientes híbridos.</p>
+    </div>
+
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none"><path d="M6 16 Q14 16 14 24 Q14 32 22 32 Q30 32 30 24 Q30 16 38 16" stroke="#3a8ef6" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M6 24 Q10 24 10 28 Q10 32 16 32" stroke="#7b4fd4" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="3 2"/><rect x="2" y="13" width="8" height="6" rx="1" stroke="#3a8ef6" stroke-width="1.5"/><rect x="38" y="13" width="8" height="6" rx="1" stroke="#3a8ef6" stroke-width="1.5"/><rect x="14" y="33" width="6" height="8" rx="1" stroke="#7b4fd4" stroke-width="1.5"/></svg>
+      <div class="service-title">Cabeamento Estruturado</div>
+      <p class="service-desc">Projetos completos de cabeamento Cat5e e Cat6 com certificação. Patch panels, organizadores, racks e toda a infraestrutura física para redes corporativas de alto desempenho.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label">Trabalhos realizados</div>
+  <h2 class="section-title">PORTFÓLIO</h2>
+  <div class="gallery-grid reveal">
+
+    <!-- 1: Cabeamento -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="300" fill="#080810"/>
+        <rect x="40" y="30" width="80" height="240" rx="4" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1.5"/>
+        <rect x="46" y="40" width="68" height="30" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="1"/>
+        <rect x="50" y="47" width="8" height="6" rx="1" fill="#3a8ef6" opacity="0.8"/><rect x="61" y="47" width="8" height="6" rx="1" fill="#3a8ef6" opacity="0.8"/><rect x="72" y="47" width="8" height="6" rx="1" fill="#3a8ef6" opacity="0.6"/><rect x="83" y="47" width="8" height="6" rx="1" fill="#7b4fd4" opacity="0.8"/><rect x="94" y="47" width="8" height="6" rx="1" fill="#7b4fd4" opacity="0.8"/>
+        <rect x="50" y="57" width="8" height="6" rx="1" fill="#7b4fd4" opacity="0.6"/><rect x="61" y="57" width="8" height="6" rx="1" fill="#3a8ef6" opacity="0.8"/><rect x="72" y="57" width="8" height="6" rx="1" fill="#3a8ef6" opacity="0.8"/>
+        <rect x="120" y="44" width="12" height="38" rx="2" fill="#13132a" stroke="#2a2a50" stroke-width="1"/>
+        <path d="M120 50 C160 50 160 80 200 80" stroke="#3a8ef6" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M120 53 C170 53 170 100 220 100" stroke="#3a8ef6" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M120 56 C175 56 175 120 230 120" stroke="#3a8ef6" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+        <path d="M120 59 C180 59 180 140 240 140" stroke="#3a8ef6" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+        <path d="M120 62 C165 62 165 160 215 160" stroke="#7b4fd4" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M120 65 C170 65 170 180 225 180" stroke="#7b4fd4" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M120 68 C175 68 175 200 235 200" stroke="#f0c040" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+        <path d="M120 71 C180 71 180 220 240 220" stroke="#f0c040" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+        <path d="M120 74 C165 74 165 240 210 240" stroke="#8888aa" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+        <rect x="46" y="80" width="68" height="20" rx="2" fill="#13132a" stroke="#7b4fd4" stroke-width="1"/>
+        <text x="80" y="93" fill="#7b4fd4" font-size="7" font-family="monospace" text-anchor="middle">SWITCH 24P</text>
+        <circle cx="52" cy="90" r="2" fill="#3a8ef6"/><circle cx="58" cy="90" r="2" fill="#3a8ef6" opacity="0.7"/><circle cx="64" cy="90" r="2" fill="#7b4fd4"/>
+        <rect x="195" y="75" width="30" height="10" rx="1" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="0.8"/>
+        <text x="210" y="83" fill="#3a8ef6" font-size="6" font-family="monospace" text-anchor="middle">CAT6-01</text>
+        <rect x="215" y="95" width="30" height="10" rx="1" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="0.8"/>
+        <text x="230" y="103" fill="#3a8ef6" font-size="6" font-family="monospace" text-anchor="middle">CAT6-02</text>
+        <rect x="225" y="155" width="30" height="10" rx="1" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="0.8"/>
+        <text x="240" y="163" fill="#7b4fd4" font-size="6" font-family="monospace" text-anchor="middle">CAT6-05</text>
+        <rect x="0" y="265" width="400" height="35" fill="rgba(8,8,16,0.92)"/>
+        <text x="20" y="284" fill="#8888aa" font-size="8.5" font-family="sans-serif" letter-spacing="2">CABEAMENTO ESTRUTURADO — ESCRITÓRIO COMERCIAL</text>
+      </svg>
+      <div class="gallery-caption">Cabeamento Cat6 — Escritório Comercial</div>
+    </div>
+
+    <!-- 2: Rack/Servidor -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="300" fill="#080810"/>
+        <rect x="80" y="20" width="240" height="260" rx="4" fill="#0d0d1a" stroke="#2a2a50" stroke-width="2"/>
+        <line x1="96" y1="20" x2="96" y2="280" stroke="#2a2a50" stroke-width="1"/><line x1="304" y1="20" x2="304" y2="280" stroke="#2a2a50" stroke-width="1"/>
+        <!-- Servidor 1 -->
+        <rect x="98" y="32" width="204" height="20" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="1.5"/>
+        <circle cx="108" cy="42" r="3" fill="#3a8ef6"/><circle cx="118" cy="42" r="3" fill="#3a8ef6" opacity="0.5"/>
+        <text x="175" y="45" fill="#3a8ef6" font-size="7" font-family="monospace" text-anchor="middle">SERVIDOR WEB</text>
+        <rect x="270" y="38" width="24" height="8" rx="1" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="0.5"/>
+        <text x="282" y="45" fill="#3a8ef6" font-size="6" font-family="monospace" text-anchor="middle">PWR</text>
+        <!-- Servidor 2 -->
+        <rect x="98" y="54" width="204" height="20" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="1.5"/>
+        <circle cx="108" cy="64" r="3" fill="#3a8ef6"/><circle cx="118" cy="64" r="3" fill="#7b4fd4" opacity="0.7"/>
+        <text x="175" y="67" fill="#3a8ef6" font-size="7" font-family="monospace" text-anchor="middle">SERVIDOR DB</text>
+        <rect x="270" y="60" width="24" height="8" rx="1" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="0.5"/>
+        <text x="282" y="67" fill="#7b4fd4" font-size="6" font-family="monospace" text-anchor="middle">PWR</text>
+        <!-- Switch -->
+        <rect x="98" y="76" width="204" height="20" rx="2" fill="#13132a" stroke="#7b4fd4" stroke-width="1.5"/>
+        <circle cx="108" cy="86" r="2.5" fill="#7b4fd4"/>
+        <rect x="118" y="82" width="5" height="4" rx="0.5" fill="#3a8ef6" opacity="0.9"/><rect x="125" y="82" width="5" height="4" rx="0.5" fill="#3a8ef6" opacity="0.9"/><rect x="132" y="82" width="5" height="4" rx="0.5" fill="#3a8ef6" opacity="0.7"/><rect x="139" y="82" width="5" height="4" rx="0.5" fill="#7b4fd4" opacity="0.9"/><rect x="146" y="82" width="5" height="4" rx="0.5" fill="#7b4fd4" opacity="0.7"/><rect x="153" y="82" width="5" height="4" rx="0.5" fill="none" stroke="#2a2a50" stroke-width="0.5"/>
+        <text x="245" y="89" fill="#7b4fd4" font-size="7" font-family="monospace">SWITCH 24P</text>
+        <!-- NAS -->
+        <rect x="98" y="98" width="204" height="36" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="1.5"/>
+        <text x="160" y="113" fill="#3a8ef6" font-size="7" font-family="monospace">NAS STORAGE</text>
+        <rect x="108" y="118" width="18" height="12" rx="1" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="0.8"/>
+        <rect x="129" y="118" width="18" height="12" rx="1" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="0.8"/>
+        <rect x="150" y="118" width="18" height="12" rx="1" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="0.8"/>
+        <rect x="171" y="118" width="18" height="12" rx="1" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="0.8"/>
+        <text x="117" y="127" fill="#3a8ef6" font-size="5" font-family="monospace" text-anchor="middle">HDD1</text>
+        <text x="138" y="127" fill="#3a8ef6" font-size="5" font-family="monospace" text-anchor="middle">HDD2</text>
+        <text x="159" y="127" fill="#3a8ef6" font-size="5" font-family="monospace" text-anchor="middle">HDD3</text>
+        <text x="180" y="127" fill="#7b4fd4" font-size="5" font-family="monospace" text-anchor="middle">HDD4</text>
+        <!-- UPS -->
+        <rect x="98" y="136" width="204" height="36" rx="2" fill="#13132a" stroke="#7b4fd4" stroke-width="1.5"/>
+        <text x="160" y="151" fill="#7b4fd4" font-size="7" font-family="monospace">NOBREAK / UPS</text>
+        <rect x="240" y="141" width="50" height="14" rx="2" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="0.8"/>
+        <rect x="242" y="143" width="35" height="10" rx="1" fill="rgba(123,79,212,0.3)"/>
+        <text x="295" y="151" fill="#7b4fd4" font-size="6" font-family="monospace">85%</text>
+        <!-- Glows -->
+        <circle cx="108" cy="42" r="5" fill="rgba(58,142,246,0.12)"/>
+        <circle cx="108" cy="64" r="5" fill="rgba(58,142,246,0.12)"/>
+        <circle cx="108" cy="86" r="5" fill="rgba(123,79,212,0.12)"/>
+        <rect x="0" y="265" width="400" height="35" fill="rgba(8,8,16,0.92)"/>
+        <text x="20" y="284" fill="#8888aa" font-size="8.5" font-family="sans-serif" letter-spacing="2">MONTAGEM DE RACK — INFRAESTRUTURA CORPORATIVA</text>
+      </svg>
+      <div class="gallery-caption">Rack com servidores, switch e NAS</div>
+    </div>
+
+    <!-- 3: Formatação -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs><linearGradient id="prog3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#3a8ef6"/><stop offset="100%" style="stop-color:#7b4fd4"/></linearGradient></defs>
+        <rect width="400" height="300" fill="#080810"/>
+        <rect x="60" y="30" width="280" height="190" rx="6" fill="#0d0d1a" stroke="#2a2a50" stroke-width="2"/>
+        <rect x="68" y="38" width="264" height="174" rx="3" fill="#080810"/>
+        <rect x="68" y="38" width="264" height="22" rx="3" fill="#13132a"/>
+        <circle cx="82" cy="49" r="4" fill="#ff5f56" opacity="0.7"/><circle cx="96" cy="49" r="4" fill="#ffbd2e" opacity="0.7"/><circle cx="110" cy="49" r="4" fill="#27c93f" opacity="0.7"/>
+        <text x="200" y="53" fill="#8888aa" font-size="8" font-family="monospace" text-anchor="middle">Instalação do Windows — Mello Corp Tecnologia</text>
+        <rect x="175" y="72" width="20" height="20" rx="1" fill="#3a8ef6" opacity="0.9"/>
+        <rect x="197" y="72" width="20" height="20" rx="1" fill="#3a8ef6" opacity="0.7"/>
+        <rect x="175" y="94" width="20" height="20" rx="1" fill="#7b4fd4" opacity="0.9"/>
+        <rect x="197" y="94" width="20" height="20" rx="1" fill="#7b4fd4" opacity="0.7"/>
+        <text x="200" y="128" fill="#ffffff" font-size="11" font-family="sans-serif" text-anchor="middle" letter-spacing="0.5">Instalando o sistema operacional</text>
+        <text x="200" y="143" fill="#8888aa" font-size="7.5" font-family="monospace" text-anchor="middle">Não desligue o computador. Isso pode levar alguns minutos.</text>
+        <rect x="120" y="158" width="160" height="8" rx="4" fill="#2a2a50"/>
+        <rect x="120" y="158" width="112" height="8" rx="4" fill="url(#prog3)"/>
+        <text x="200" y="178" fill="#3a8ef6" font-size="9" font-family="monospace" text-anchor="middle">70% concluído</text>
+        <text x="90" y="198" fill="rgba(58,142,246,0.5)" font-size="7" font-family="monospace">[ OK ] Copiando arquivos de sistema...</text>
+        <text x="90" y="207" fill="rgba(123,79,212,0.5)" font-size="7" font-family="monospace">[ OK ] Instalando drivers de hardware...</text>
+        <rect x="185" y="220" width="30" height="8" rx="2" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1.5"/>
+        <rect x="160" y="228" width="80" height="6" rx="3" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1.5"/>
+        <rect x="340" y="140" width="18" height="30" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="1.5"/>
+        <rect x="344" y="148" width="10" height="4" rx="1" fill="#3a8ef6" opacity="0.7"/>
+        <circle cx="349" cy="162" r="2" fill="#3a8ef6"/>
+        <text x="349" y="185" fill="#8888aa" font-size="7" font-family="monospace" text-anchor="middle">USB</text>
+        <rect x="0" y="265" width="400" height="35" fill="rgba(8,8,16,0.92)"/>
+        <text x="20" y="284" fill="#8888aa" font-size="8.5" font-family="sans-serif" letter-spacing="2">FORMATAÇÃO & REINSTALAÇÃO — WINDOWS 11</text>
+      </svg>
+      <div class="gallery-caption">Formatação e instalação de Windows</div>
+    </div>
+
+    <!-- 4: Hardware -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="300" fill="#080810"/>
+        <rect x="40" y="30" width="220" height="240" rx="4" fill="#0a0f18" stroke="#2a2a50" stroke-width="2"/>
+        <!-- PCB traces -->
+        <line x1="60" y1="50" x2="240" y2="50" stroke="rgba(58,142,246,0.12)" stroke-width="0.8"/>
+        <line x1="60" y1="240" x2="240" y2="240" stroke="rgba(58,142,246,0.12)" stroke-width="0.8"/>
+        <!-- CPU socket -->
+        <rect x="80" y="60" width="90" height="90" rx="3" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="2"/>
+        <rect x="90" y="70" width="70" height="70" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="1"/>
+        <rect x="100" y="80" width="50" height="50" rx="1" fill="#1a1a35" stroke="#7b4fd4" stroke-width="1.5"/>
+        <rect x="103" y="83" width="10" height="10" rx="0.5" fill="rgba(58,142,246,0.3)"/><rect x="116" y="83" width="10" height="10" rx="0.5" fill="rgba(58,142,246,0.3)"/><rect x="129" y="83" width="10" height="10" rx="0.5" fill="rgba(123,79,212,0.3)"/>
+        <rect x="103" y="96" width="10" height="10" rx="0.5" fill="rgba(58,142,246,0.2)"/><rect x="116" y="96" width="10" height="10" rx="0.5" fill="rgba(123,79,212,0.3)"/><rect x="129" y="96" width="10" height="10" rx="0.5" fill="rgba(58,142,246,0.3)"/>
+        <rect x="103" y="109" width="10" height="10" rx="0.5" fill="rgba(123,79,212,0.2)"/><rect x="116" y="109" width="10" height="10" rx="0.5" fill="rgba(58,142,246,0.3)"/><rect x="129" y="109" width="10" height="10" rx="0.5" fill="rgba(58,142,246,0.2)"/>
+        <text x="125" y="143" fill="#3a8ef6" font-size="7" font-family="monospace" text-anchor="middle">CPU</text>
+        <!-- RAM slots -->
+        <rect x="190" y="60" width="12" height="80" rx="2" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="1.5"/>
+        <rect x="206" y="60" width="12" height="80" rx="2" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="1.5"/>
+        <rect x="192" y="70" width="8" height="60" rx="1" fill="#13132a" stroke="#3a8ef6" stroke-width="0.8"/>
+        <rect x="208" y="70" width="8" height="60" rx="1" fill="#13132a" stroke="#3a8ef6" stroke-width="0.8"/>
+        <text x="196" y="158" fill="#7b4fd4" font-size="6" font-family="monospace" text-anchor="middle">RAM</text>
+        <text x="196" y="165" fill="#7b4fd4" font-size="6" font-family="monospace" text-anchor="middle">16GB</text>
+        <!-- PCIe slot -->
+        <rect x="60" y="170" width="180" height="40" rx="2" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="1.5"/>
+        <text x="150" y="194" fill="#3a8ef6" font-size="8" font-family="monospace" text-anchor="middle">PCIe x16 SLOT</text>
+        <!-- M.2 SSD -->
+        <rect x="60" y="220" width="100" height="20" rx="2" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="1.5"/>
+        <text x="110" y="233" fill="#7b4fd4" font-size="7" font-family="monospace" text-anchor="middle">M.2 NVMe SSD</text>
+        <!-- I/O -->
+        <rect x="40" y="30" width="14" height="80" rx="2" fill="#13132a" stroke="#2a2a50" stroke-width="1"/>
+        <rect x="43" y="36" width="8" height="10" rx="1" fill="rgba(58,142,246,0.3)" stroke="#3a8ef6" stroke-width="0.5"/>
+        <rect x="43" y="50" width="8" height="6" rx="1" fill="rgba(123,79,212,0.3)" stroke="#7b4fd4" stroke-width="0.5"/>
+        <!-- CPU glow -->
+        <circle cx="125" cy="105" r="28" fill="rgba(123,79,212,0.04)"/>
+        <!-- Side label -->
+        <rect x="280" y="50" width="80" height="200" rx="4" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1.5"/>
+        <rect x="290" y="60" width="60" height="40" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="0.8"/>
+        <text x="320" y="78" fill="#3a8ef6" font-size="7" font-family="monospace" text-anchor="middle">LIMPEZA</text>
+        <text x="320" y="88" fill="#3a8ef6" font-size="7" font-family="monospace" text-anchor="middle">THERMAL</text>
+        <rect x="290" y="110" width="60" height="40" rx="2" fill="#13132a" stroke="#7b4fd4" stroke-width="0.8"/>
+        <text x="320" y="128" fill="#7b4fd4" font-size="7" font-family="monospace" text-anchor="middle">UPGRADE</text>
+        <text x="320" y="138" fill="#7b4fd4" font-size="7" font-family="monospace" text-anchor="middle">RAM+SSD</text>
+        <rect x="0" y="265" width="400" height="35" fill="rgba(8,8,16,0.92)"/>
+        <text x="20" y="284" fill="#8888aa" font-size="8.5" font-family="sans-serif" letter-spacing="2">MANUTENÇÃO & UPGRADE DE HARDWARE — DESKTOP</text>
+      </svg>
+      <div class="gallery-caption">Diagnóstico e upgrade de hardware</div>
+    </div>
+
+    <!-- 5: Topologia de rede -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="300" fill="#080810"/>
+        <ellipse cx="200" cy="40" rx="50" ry="22" fill="none" stroke="rgba(58,142,246,0.4)" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <text x="200" y="44" fill="#3a8ef6" font-size="9" font-family="monospace" text-anchor="middle">INTERNET</text>
+        <line x1="200" y1="62" x2="200" y2="88" stroke="#3a8ef6" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <!-- Roteador -->
+        <rect x="165" y="88" width="70" height="26" rx="3" fill="#13132a" stroke="#3a8ef6" stroke-width="2"/>
+        <text x="200" y="104" fill="#3a8ef6" font-size="7.5" font-family="monospace" text-anchor="middle">FIREWALL/ROTEADOR</text>
+        <line x1="200" y1="114" x2="200" y2="136" stroke="#3a8ef6" stroke-width="1.5"/>
+        <!-- Switch core -->
+        <rect x="155" y="136" width="90" height="22" rx="2" fill="#13132a" stroke="#7b4fd4" stroke-width="2"/>
+        <text x="200" y="150" fill="#7b4fd4" font-size="7.5" font-family="monospace" text-anchor="middle">SWITCH CORE 24P</text>
+        <!-- Linhas para setores -->
+        <line x1="165" y1="158" x2="80" y2="196" stroke="#3a8ef6" stroke-width="1.2"/>
+        <line x1="185" y1="158" x2="145" y2="196" stroke="#3a8ef6" stroke-width="1.2"/>
+        <line x1="215" y1="158" x2="255" y2="196" stroke="#7b4fd4" stroke-width="1.2"/>
+        <line x1="235" y1="158" x2="320" y2="196" stroke="#7b4fd4" stroke-width="1.2"/>
+        <!-- Setores -->
+        <rect x="50" y="196" width="60" height="18" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="1.5"/>
+        <text x="80" y="208" fill="#3a8ef6" font-size="7" font-family="monospace" text-anchor="middle">VENDAS</text>
+        <rect x="112" y="196" width="60" height="18" rx="2" fill="#13132a" stroke="#3a8ef6" stroke-width="1.5"/>
+        <text x="142" y="208" fill="#3a8ef6" font-size="7" font-family="monospace" text-anchor="middle">ADM</text>
+        <rect x="228" y="196" width="56" height="18" rx="2" fill="#13132a" stroke="#7b4fd4" stroke-width="1.5"/>
+        <text x="256" y="208" fill="#7b4fd4" font-size="7" font-family="monospace" text-anchor="middle">T.I.</text>
+        <rect x="290" y="196" width="72" height="18" rx="2" fill="#13132a" stroke="#7b4fd4" stroke-width="1.5"/>
+        <text x="326" y="208" fill="#7b4fd4" font-size="7" font-family="monospace" text-anchor="middle">DIRETORIA</text>
+        <!-- Dispositivos -->
+        <circle cx="65" cy="248" r="8" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="1"/>
+        <circle cx="85" cy="248" r="8" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="1"/>
+        <circle cx="105" cy="248" r="8" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="1"/>
+        <text x="85" y="268" fill="#8888aa" font-size="6.5" font-family="monospace" text-anchor="middle">PCs</text>
+        <circle cx="270" cy="248" r="8" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="1"/>
+        <circle cx="290" cy="248" r="8" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="1"/>
+        <text x="280" y="268" fill="#8888aa" font-size="6.5" font-family="monospace" text-anchor="middle">Servers</text>
+        <line x1="65" y1="214" x2="65" y2="240" stroke="#3a8ef6" stroke-width="1" opacity="0.5"/>
+        <line x1="85" y1="214" x2="85" y2="240" stroke="#3a8ef6" stroke-width="1" opacity="0.5"/>
+        <line x1="105" y1="214" x2="105" y2="240" stroke="#3a8ef6" stroke-width="1" opacity="0.5"/>
+        <line x1="270" y1="214" x2="270" y2="240" stroke="#7b4fd4" stroke-width="1" opacity="0.5"/>
+        <line x1="290" y1="214" x2="290" y2="240" stroke="#7b4fd4" stroke-width="1" opacity="0.5"/>
+        <circle cx="200" cy="147" r="22" fill="rgba(123,79,212,0.05)"/>
+        <rect x="0" y="278" width="400" height="22" fill="rgba(8,8,16,0.92)"/>
+        <text x="20" y="294" fill="#8888aa" font-size="8.5" font-family="sans-serif" letter-spacing="2">TOPOLOGIA DE REDE — EMPRESA COMERCIAL</text>
+      </svg>
+      <div class="gallery-caption">Projeto de rede corporativa — Topologia</div>
+    </div>
+
+    <!-- 6: Suporte remoto -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="300" fill="#080810"/>
+        <!-- Monitor técnico -->
+        <rect x="20" y="40" width="160" height="110" rx="4" fill="#0d0d1a" stroke="#3a8ef6" stroke-width="1.5"/>
+        <rect x="26" y="46" width="148" height="98" rx="2" fill="#080810"/>
+        <rect x="26" y="46" width="148" height="14" rx="2" fill="#13132a"/>
+        <circle cx="34" cy="53" r="3" fill="#ff5f56" opacity="0.7"/><circle cx="44" cy="53" r="3" fill="#ffbd2e" opacity="0.7"/><circle cx="54" cy="53" r="3" fill="#27c93f" opacity="0.7"/>
+        <text x="100" y="57" fill="#8888aa" font-size="6" font-family="monospace" text-anchor="middle">terminal — mello@corp</text>
+        <text x="30" y="72" fill="#3a8ef6" font-size="6.5" font-family="monospace">$ connect 192.168.1.105</text>
+        <text x="30" y="82" fill="#27c93f" font-size="6.5" font-family="monospace">✓ Conexão estabelecida</text>
+        <text x="30" y="92" fill="#8888aa" font-size="6.5" font-family="monospace">Host: DESKTOP-CLIENTE</text>
+        <text x="30" y="102" fill="#8888aa" font-size="6.5" font-family="monospace">OS: Windows 11 Pro</text>
+        <text x="30" y="112" fill="#3a8ef6" font-size="6.5" font-family="monospace">$ diagnostico --full</text>
+        <text x="30" y="122" fill="#7b4fd4" font-size="6.5" font-family="monospace">CPU: 94% | RAM: 87% !</text>
+        <rect x="90" y="150" width="20" height="8" rx="2" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1"/>
+        <rect x="76" y="158" width="48" height="5" rx="2" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1"/>
+        <!-- Seta -->
+        <path d="M190 95 L210 95" stroke="#3a8ef6" stroke-width="2" stroke-dasharray="4 2"/>
+        <path d="M206 90 L212 95 L206 100" fill="none" stroke="#3a8ef6" stroke-width="1.5" stroke-linejoin="round"/>
+        <text x="200" y="80" fill="#3a8ef6" font-size="7.5" font-family="monospace" text-anchor="middle">REMOTO</text>
+        <path d="M192 90 Q200 82 208 90" stroke="#3a8ef6" stroke-width="1.2" fill="none" opacity="0.6"/>
+        <path d="M195 94 Q200 88 205 94" stroke="#3a8ef6" stroke-width="1.2" fill="none" opacity="0.8"/>
+        <circle cx="200" cy="97" r="2" fill="#3a8ef6"/>
+        <!-- Monitor cliente -->
+        <rect x="220" y="40" width="160" height="110" rx="4" fill="#0d0d1a" stroke="#7b4fd4" stroke-width="1.5"/>
+        <rect x="226" y="46" width="148" height="98" rx="2" fill="#080810"/>
+        <rect x="226" y="46" width="148" height="14" rx="2" fill="#13132a"/>
+        <text x="300" y="57" fill="#8888aa" font-size="6" font-family="monospace" text-anchor="middle">DESKTOP-CLIENTE</text>
+        <rect x="226" y="130" width="148" height="14" rx="0" fill="#13132a"/>
+        <rect x="240" y="62" width="120" height="60" rx="2" fill="#0d0d1a" stroke="#ff5f56" stroke-width="1"/>
+        <rect x="240" y="62" width="120" height="12" rx="2" fill="#1a0a0a"/>
+        <text x="300" y="71" fill="#ff5f56" font-size="7" font-family="monospace" text-anchor="middle">ERRO DO SISTEMA</text>
+        <text x="300" y="86" fill="#8888aa" font-size="6.5" font-family="monospace" text-anchor="middle">Uso de memória crítico</text>
+        <text x="300" y="96" fill="#8888aa" font-size="6.5" font-family="monospace" text-anchor="middle">Processos suspeitos</text>
+        <text x="300" y="106" fill="#7b4fd4" font-size="6.5" font-family="monospace" text-anchor="middle">Aguardando técnico...</text>
+        <path d="M310 115 L316 128 L312 126 L310 130 L308 126 L304 128 Z" fill="#ffffff" opacity="0.8"/>
+        <rect x="290" y="150" width="20" height="8" rx="2" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1"/>
+        <rect x="276" y="158" width="48" height="5" rx="2" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1"/>
+        <!-- Status bar -->
+        <rect x="20" y="180" width="360" height="60" rx="4" fill="#0d0d1a" stroke="#2a2a50" stroke-width="1"/>
+        <text x="35" y="200" fill="#3a8ef6" font-size="9" font-family="monospace">STATUS DA SESSÃO REMOTA</text>
+        <text x="35" y="214" fill="#27c93f" font-size="7.5" font-family="monospace">● Conectado  |  Latência: 18ms  |  AES-256</text>
+        <text x="35" y="228" fill="#8888aa" font-size="7.5" font-family="monospace">Técnico: Mello Corp  |  Duração: 00:18:42</text>
+        <rect x="0" y="265" width="400" height="35" fill="rgba(8,8,16,0.92)"/>
+        <text x="20" y="284" fill="#8888aa" font-size="8.5" font-family="sans-serif" letter-spacing="2">SUPORTE REMOTO — ATENDIMENTO EM TEMPO REAL</text>
+      </svg>
+      <div class="gallery-caption">Suporte remoto — Diagnóstico e resolução</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section id="depoimentos">
+  <div class="section-label">O que dizem sobre nós</div>
+  <h2 class="section-title">DEPOIMENTOS</h2>
+  <div class="testimonials-grid reveal">
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars">
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="testimonial-text">Meu computador estava super lento, travando todo dia. Entrei em contato com a Mello Corp e no mesmo dia já tinha alguém aqui em casa. Descobriram que era vírus e memória cheia. Em duas horas o PC estava novo. Recomendo demais!</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">RF</div>
+        <div>
+          <div class="testimonial-name">Roberto Ferreira</div>
+          <div class="testimonial-role">Mogi das Cruzes, SP</div>
+        </div>
+        <span class="testimonial-badge">Pessoa Física</span>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars">
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="testimonial-text">Contratamos a Mello Corp para estruturar toda a rede da nossa empresa. Foram profissionais do início ao fim: organizaram o cabeamento, instalaram o switch e configuraram o servidor. Nossa internet melhorou 300% e temos suporte sempre que precisamos.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">CM</div>
+        <div>
+          <div class="testimonial-name">Carlos Monteiro</div>
+          <div class="testimonial-role">Diretor — Distribuidora Monteiro</div>
+        </div>
+        <span class="testimonial-badge empresa">Empresa</span>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars">
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="testimonial-text">Perdi todos os meus arquivos de trabalho quando o HD pifou. Pensei que tinha perdido tudo. A Mello Corp recuperou 98% dos meus dados! Fiquei muito aliviada. Atendimento rápido e super honesto sobre o que era possível fazer.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">AS</div>
+        <div>
+          <div class="testimonial-name">Ana Silva</div>
+          <div class="testimonial-role">Designer Freelancer — Suzano, SP</div>
+        </div>
+        <span class="testimonial-badge">Pessoa Física</span>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars">
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="testimonial-text">Tínhamos um problema sério de lentidão no servidor que impedia o trabalho da equipe toda. A Mello Corp resolveu no mesmo dia via suporte remoto, sem precisar parar a operação. Hoje temos contrato mensal e não trocaria por nada.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">PT</div>
+        <div>
+          <div class="testimonial-name">Paulo Takahashi</div>
+          <div class="testimonial-role">Gerente de TI — Logística Rápida LTDA</div>
+        </div>
+        <span class="testimonial-badge empresa">Empresa</span>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars">
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="testimonial-text">Precisei formatar meu notebook e fiquei com medo de perder minhas fotos e documentos. Eles fizeram o backup de tudo, formataram e devolveram o computador rápido e limpo. Preço justo e atendimento nota 10. Voltarei sempre!</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">ML</div>
+        <div>
+          <div class="testimonial-name">Mariana Lima</div>
+          <div class="testimonial-role">Professora — Mogi das Cruzes, SP</div>
+        </div>
+        <span class="testimonial-badge">Pessoa Física</span>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars">
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#f0c040"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="testimonial-text">A Mello Corp implantou toda a infraestrutura de TI da nossa nova filial: rede, servidores, câmeras e cabeamento. Prazo cumprido, orçamento respeitado e suporte pós-implantação impecável. Parceria de longo prazo garantida.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JO</div>
+        <div>
+          <div class="testimonial-name">Juliana Oliveira</div>
+          <div class="testimonial-role">Sócia — Clínica Saúde Total</div>
+        </div>
+        <span class="testimonial-badge empresa">Empresa</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="sobre">
+  <div>
+    <div class="section-label">Quem somos</div>
+    <h2 class="section-title">SOBRE A<br>MELLO CORP</h2>
+    <p class="about-text">A Mello Corp nasceu da paixão por tecnologia e da vontade de oferecer suporte de TI de verdade — rápido, honesto e eficiente. Atendemos empresas e pessoas físicas na região de Mogi das Cruzes e Grande São Paulo.</p>
+    <p class="about-text" style="margin-top:1rem;">Nosso compromisso é simples: o seu equipamento funciona ou a gente não para.</p>
+    <ul class="about-list">
+      <li>Atendimento presencial e remoto</li>
+      <li>Orçamento sem compromisso</li>
+      <li>Garantia em todos os serviços</li>
+      <li>Pontualidade e transparência</li>
+    </ul>
+  </div>
+  <div class="about-visual reveal">
+    <div class="about-box">
+      <div class="about-quote">"TECNOLOGIA QUE FUNCIONA. SUPORTE QUE APARECE."</div>
+      <p class="about-text">Seja para manter sua empresa rodando ou seu computador pessoal em dia, a Mello Corp está pronta para atender.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contato">
+  <div class="section-label">Fale conosco</div>
+  <h2 class="section-title">CONTATO</h2>
+
+  <div style="display:flex;gap:1rem;margin-bottom:3rem;flex-wrap:wrap;">
+    <a href="https://wa.me/5511917614187?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orçamento." target="_blank"
+       style="display:flex;align-items:center;gap:0.7rem;background:#25D366;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.85rem 1.8rem;text-decoration:none;font-weight:600;transition:opacity 0.2s;"
+       onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="black"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chamar no WhatsApp
+    </a>
+    <a href="mailto:mello.suporteti.oficial@gmail.com"
+       style="display:flex;align-items:center;gap:0.7rem;background:transparent;color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.85rem 1.8rem;text-decoration:none;font-weight:600;border:1px solid var(--gray2);transition:border-color 0.2s,background 0.2s;"
+       onmouseover="this.style.borderColor='var(--blue)';this.style.background='rgba(58,142,246,0.05)'" onmouseout="this.style.borderColor='var(--gray2)';this.style.background='transparent'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+      Enviar E-mail
+    </a>
+  </div>
+
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <div class="contact-item">
+        <span class="contact-item-label">WhatsApp</span>
+        <a href="https://wa.me/5511917614187" target="_blank" class="contact-item-value" style="color:var(--white);text-decoration:none;">(11) 91761-4187</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">E-mail</span>
+        <a href="mailto:mello.suporteti.oficial@gmail.com" class="contact-item-value" style="color:var(--white);text-decoration:none;">mello.suporteti.oficial@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Localização</span>
+        <span class="contact-item-value">Mogi das Cruzes, SP<br>Atendimento em toda Grande SP</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Horário</span>
+        <span class="contact-item-value">Seg–Sex: 8h às 22h<br>Sáb: 8h às 18h</span>
+      </div>
+    </div>
+
+    <form id="contact-form" class="contact-form" action="https://formspree.io/f/myklbjkb" method="POST">
+      <div class="form-group"><label for="nome">Nome</label><input type="text" id="nome" name="nome" placeholder="Seu nome completo" required></div>
+      <div class="form-group"><label for="email">E-mail</label><input type="email" id="email" name="email" placeholder="seuemail@gmail.com" required></div>
+      <div class="form-group"><label for="telefone">Telefone / WhatsApp</label><input type="text" id="telefone" name="telefone" placeholder="(11) 9 0000-0000"></div>
+      <div class="form-group"><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem" placeholder="Descreva o problema ou serviço que precisa..." required></textarea></div>
+      <input type="hidden" name="_replyto" value="mello.suporteti.oficial@gmail.com">
+      <input type="hidden" name="_subject" value="Novo contato pelo site — Mello Corp">
+      <input type="text" name="_gotcha" style="display:none">
+      <button class="form-submit" type="submit" id="submit-btn">Enviar Mensagem</button>
+      <div id="form-success" style="display:none;margin-top:1rem;padding:1rem;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);color:#25D366;font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;letter-spacing:0.1em;">✓ MENSAGEM ENVIADA! Retornaremos em breve.</div>
+      <div id="form-error" style="display:none;margin-top:1rem;padding:1rem;background:rgba(204,34,0,0.1);border:1px solid rgba(204,34,0,0.3);color:#ff6644;font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;letter-spacing:0.1em;">✗ Erro ao enviar. Tente pelo WhatsApp ou e-mail.</div>
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:0.8rem;">Ou fale direto pelo <a href="https://wa.me/5511917614187" target="_blank" style="color:var(--blue);">WhatsApp</a> ou <a href="mailto:mello.suporteti.oficial@gmail.com" style="color:var(--purple);">E-mail</a></p>
+    </form>
+  </div>
+</section>
+
+<!-- WhatsApp flutuante -->
+<a href="https://wa.me/5511917614187" target="_blank" title="Fale no WhatsApp" style="position:fixed;bottom:1.8rem;right:1.8rem;z-index:200;background:#25D366;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.35);transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<footer>
+  <div class="footer-logo">MELLO <span>CORP</span></div>
+  <div class="footer-copy">© 2025 Mello Corp — Todos os direitos reservados</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const successMsg = document.getElementById('form-success');
+  const errorMsg = document.getElementById('form-error');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+    successMsg.style.display = 'none';
+    errorMsg.style.display = 'none';
+    try {
+      const response = await fetch('https://formspree.io/f/myklbjkb', {
+        method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        successMsg.style.display = 'block';
+        form.reset();
+        submitBtn.textContent = 'Mensagem Enviada ✓';
+      } else { throw new Error('Erro'); }
+    } catch (err) {
+      errorMsg.style.display = 'block';
+      submitBtn.textContent = 'Enviar Mensagem';
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
